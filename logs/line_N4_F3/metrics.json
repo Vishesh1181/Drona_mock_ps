@@ -1,0 +1,71 @@
+{
+ "tracking_rms_m": 0.022160916712040877,
+ "tracking_rms_per_drone_m": {
+  "0": 0.022178206529200127,
+  "1": 0.02202419934982494,
+  "2": 0.023107679362399536,
+  "3": 0.021296052937197087
+ },
+ "tracking_max_m": 0.06894580855270578,
+ "tracking_rms_axis_m": {
+  "x": 0.00664827866369235,
+  "y": 0.0035681671611336053,
+  "z": 0.020836861650404877
+ },
+ "formation_shape_rms_m": 0.020705639136176943,
+ "phase": {
+  "0": {
+   "measured_deg": -2.2350389217396134,
+   "commanded_deg": 0.0,
+   "amplitude_m": 0.1807638036397458,
+   "error_deg": -2.2350389217396174
+  },
+  "1": {
+   "measured_deg": 85.29315479794188,
+   "commanded_deg": 90.0,
+   "amplitude_m": 0.1807005369665202,
+   "error_deg": -4.706845202058125
+  },
+  "2": {
+   "measured_deg": 175.1761079469017,
+   "commanded_deg": -180.0,
+   "amplitude_m": 0.17811416285054232,
+   "error_deg": -4.823892053098293
+  },
+  "3": {
+   "measured_deg": -93.20751677934804,
+   "commanded_deg": -90.0,
+   "amplitude_m": 0.18130411224563364,
+   "error_deg": -3.207516779348034
+  }
+ },
+ "phase_sync_error_deg": 2.5888531313586753,
+ "phase_lag_vs_command_deg": 3.7433232390610174,
+ "min_separation_m": 0.38407167003512055,
+ "min_separation_t": 4.599999999999826,
+ "min_separation_pair": [
+  2,
+  3
+ ],
+ "localization_rms_m": 0.022641067837123708,
+ "localization_rms_axis_m": {
+  "x": 0.006917873036168835,
+  "y": 0.0015413994208290829,
+  "z": 0.021503141009772353
+ },
+ "status_fraction": {
+  "valid": 0.9967,
+  "stale": 0.0033
+ },
+ "learned_hover_throttle_end": {
+  "0": 1451.6,
+  "1": 1437.5,
+  "2": 1442.7,
+  "3": 1440.2
+ },
+ "pass": {
+  "tracking<=0.10m": true,
+  "phase_sync<=10deg": true,
+  "min_sep>=0.35m": true
+ }
+}

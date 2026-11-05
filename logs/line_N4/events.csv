@@ -1,0 +1,23 @@
+t,drone,event,detail
+0.0,-1,ARM,"all drones armed, mission start"
+3.84,0,STALE_HOLD,vision >150 ms old
+3.84,1,STALE_HOLD,vision >150 ms old
+3.84,2,STALE_HOLD,vision >150 ms old
+3.84,3,STALE_HOLD,vision >150 ms old
+3.88,0,RECOVERED,fresh vision again
+3.88,1,RECOVERED,fresh vision again
+3.88,2,RECOVERED,fresh vision again
+3.88,3,RECOVERED,fresh vision again
+16.6,0,STALE_HOLD,vision >150 ms old
+16.6,1,STALE_HOLD,vision >150 ms old
+16.6,2,STALE_HOLD,vision >150 ms old
+16.6,3,STALE_HOLD,vision >150 ms old
+16.68,0,RECOVERED,fresh vision again
+16.68,1,RECOVERED,fresh vision again
+16.68,2,RECOVERED,fresh vision again
+16.68,3,RECOVERED,fresh vision again
+35.56,1,DISARM,mission landing complete
+35.56,2,DISARM,mission landing complete
+35.6,3,DISARM,mission landing complete
+35.88,0,DISARM,mission landing complete
+35.88,-1,END,all drones down

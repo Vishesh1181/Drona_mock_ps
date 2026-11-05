@@ -1,0 +1,29 @@
+{
+ "ok": true,
+ "reasons": [],
+ "suggestions": [],
+ "min_separation": 0.39178788273139176,
+ "worst": {
+  "sep": 0.39178788273139176,
+  "t": 4.64,
+  "pair": [
+   0,
+   1
+  ],
+  "phase": "transit"
+ },
+ "worst_formation": {
+  "sep": 0.55,
+  "t": 6.3,
+  "pair": [
+   0,
+   1
+  ],
+  "phase": "hold"
+ },
+ "max_acc": {
+  "xy": 0.3282113106623904,
+  "z_up": 0.66082731779234,
+  "z_down": 0.6608273177923425
+ }
+}

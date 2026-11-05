@@ -1,0 +1,6 @@
+t,drone,event,detail
+0.0,-1,ARM,"all drones armed, mission start"
+8.04,0,STALE_HOLD,vision >150 ms old
+8.08,0,RECOVERED,fresh vision again
+19.48,0,DISARM,mission landing complete
+19.48,-1,END,all drones down

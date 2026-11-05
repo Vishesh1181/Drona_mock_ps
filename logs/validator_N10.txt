@@ -1,0 +1,18 @@
+[validator] line N=10: REJECTED  (min planned separation 0.389 m)
+   reason    : geofence: drone 0 at [-1.002  0.491  1.   ] at t=5.36s (transit)
+   reason    : line with N=10 is infeasible: needs d>=0.350 but fence allows d<=0.222
+   suggestion: max d = 0.222 m for N=10
+   suggestion: max N = 6 for a line
+   suggestion: or use a circle (N=10 fits with R in [0.567, 0.631] m)
+
+[validator] circle N=10: REJECTED  (min planned separation 0.269 m)
+   reason    : formation separation 0.309 m < 0.35 m (drones 0,9, hold)
+   reason    : separation 0.269 m < 0.35 m between drones 8 and 9 at t=5.22s (transit)
+   suggestion: min R = 0.566 m (now 0.5)
+   suggestion: transit/takeoff conflict: spawn spacing >= sqrt(2)*0.35 = 0.495 m guarantees safe straight transits, or stagger transit altitudes
+   suggestion: choose R in [0.566, 0.631] m
+   -> retrying circle with suggested R = 0.599
+[validator] circle N=10: REJECTED  (min planned separation 0.307 m)
+   reason    : separation 0.307 m < 0.35 m between drones 8 and 9 at t=5.36s (transit)
+   suggestion: transit/takeoff conflict: spawn spacing >= sqrt(2)*0.35 = 0.495 m guarantees safe straight transits, or stagger transit altitudes
+

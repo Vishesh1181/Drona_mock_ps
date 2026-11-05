@@ -1,0 +1,128 @@
+# SwarmSim-Lite - every tunable lives here (no hardcoding in code).
+# Lines marked [FIXED] are PS specs - do not change them.
+seed: 7
+
+sim:
+  physics_hz: 250            # [FIXED >= 240] physics + on-board attitude loop rate
+  control_hz: 25             # [FIXED] our outer (position) loop rate; 250/25 = 10 substeps
+  gui: false                 # PyBullet 3D window (nice for the demo video)
+  physics: PYB_GND_DRAG_DW   # ground effect + drag + downwash (PS asks for this)
+  dw_min_dz: 0.05            # m, downwash only from a drone at least this much higher (upstream model diverges as dz -> 0)
+  init_time: 1.0             # s on the ground collecting vision before planning
+  spawn:
+    spacing: 0.55            # >= sqrt(2)*0.35 = 0.495 -> transits provably safe (report, Math 3)
+    z: 0.05
+    shuffle_ids: true        # scramble IDs on the grid so slot assignment matters
+
+world:                       # [FIXED]
+  geofence: {x: [-1.0, 1.0], y: [-0.6, 0.6], z: [0.6, 1.4]}
+  min_separation: 0.35
+
+drone_model:                 # Crazyflie cf2x.urdf values (run prints the real ones - check!)
+  mass: 0.027
+  thrust_to_weight: 2.25
+
+disturbances:
+  drift_accel_max: 0.15      # [FIXED] m/s^2, constant random push per axis per drone
+  battery_final: 0.93        # [FIXED] max thrust 100% -> 93%
+  battery_sag_time: 120.0    # [FIXED] over 120 s
+
+pluto:                       # [FIXED] RC semantics of the real Pluto
+  rc_min: 1000
+  rc_mid: 1500
+  rc_max: 2000
+  max_tilt_deg: 15
+  max_yaw_rate_deg: 90
+
+camera:
+  position: [0.0, 0.0, 3.0]  # [FIXED] looking straight down
+  width: 1280
+  height: 720
+  fx: 900.0
+  fy: 900.0
+  cx: 640.0
+  cy: 360.0
+  fps: 30
+  latency: 0.08              # [FIXED] s
+  pixel_noise_sigma: 3.0     # [FIXED] Gaussian noise on grey levels (0-255)
+  corner_jitter_px: 0.0      # optional extra realism: jitter on projected corners
+  drop_prob: 0.05            # [FIXED]
+  background_gray: 110
+  aruco_dict: DICT_4X4_50    # [FIXED]
+  marker_size: 0.08          # [FIXED] m (black square)
+  plate_size: 0.1067         # m, white quiet zone around the marker (1 cell each side)
+  marker_height: 0.015       # m, marker plane above the drone body origin
+
+localization:
+  stale_s: 0.15              # [FIXED]
+  lost_s: 0.30               # [FIXED]
+  max_speed: 3.0             # m/s, fastest physically believable motion (outlier gate)
+  gate_margin: 0.10          # m, + noise allowance in the gate
+  reacquire_after: 4         # consecutive rejected frames -> trust the camera again
+  alpha_xy: 0.6              # alpha-beta filter gains (position, velocity correction)
+  beta_xy: 0.35              # beta too small -> lagging velocity -> oscillation (step_test)
+  alpha_z: 0.6               # z is the noisy axis (Math 4); softer z gains were TESTED
+  beta_z: 0.2                #   and made it worse (lagging vz -> z oscillation)
+  alpha_yaw: 0.5
+  max_extrapolation: 0.2     # s, cap on latency-compensating prediction
+  size_bias_px: 0.29         # sub-pixel detector bias (markers look ~0.3 px small);
+                             # measured with tools/calibrate_vision.py, offline only
+
+mission:
+  formation: line            # line | circle (CLI overrides)
+  n_drones: 4
+  height: 1.0
+  line_spacing: 0.55         # d  (>= 0.495 too, same CAPT reason)
+  circle_radius: 0.5         # R
+  wave_amplitude: 0.2        # A
+  wave_period: 6.0           # T -> omega = 2*pi/T
+  wave_cycles: 3
+  wave_ramp: 1.5             # s, C2-smooth amplitude envelope at wave start/end
+  takeoff_time: 3.0
+  transit_vmax: 0.35         # m/s, peak speed of the min-jerk transit
+  transit_min_time: 3.0
+  hold_before: 5.0
+  hold_after: 3.0
+  land_time: 4.0
+  yaw: 0.0
+
+validator:
+  dt: 0.02                   # [FIXED] sampling step
+  accel_margin: 0.5          # plan may use at most 50% of the available acceleration
+  battery_for_check: 0.93
+
+control:
+  hover_throttle_guess: 1500 # deliberately naive ("1500 = chill"); integrator finds real hover
+  k_throttle: 45.3           # throttle units per m/s^2 = 1000*m/Tmax (from URDF)
+  pos_kp_xy: 1.5             # outer loop (1/s)
+  pos_kp_z: 1.5
+  vel_kp_xy: 4.0             # inner loop (1/s)
+  vel_ki_xy: 1.0             # (1/s^2)  integrator kills drift
+  vel_kp_z: 4.0
+  vel_ki_z: 2.0              #          integrator finds hover + tracks battery sag
+  vmax_xy: 0.8
+  vmax_z: 0.6
+  amax_xy: 2.0               # < g*tan(15 deg) = 2.63
+  amax_z_up: 4.0
+  amax_z_down: 4.0           # symmetric with up: an asymmetric clamp rectifies noise into a z offset
+  imax_xy: 1.0               # anti-windup clamps (m/s^2)
+  imax_z: 4.0
+  yaw_kp: 2.0
+
+safety:
+  emergency_hold_time: 1.0
+  land_speed: 0.3            # m/s, vision-guided landing
+  disarm_height: 0.04        # m above that drone's own ground height
+  touchdown_wait: 1.5        # s with landing target at the floor -> assume touchdown
+  blind_descent_accel: 0.3   # m/s^2 for the first blind_descent_time s, then constant speed
+  blind_descent_time: 1.0
+  fence_tolerance: 0.0
+  stale_pauses_swarm: true   # a stale drone freezes the shared clock so the wave stays in sync
+
+faults:
+  F1: {drone: 2, start: 16.0, duration: 0.4}   # marker hidden (s after arming)
+  F3: {drone: 1, start: 14.0, jump: 1.0}       # one frame lies: drone 1 moved 1 m
+
+logging:
+  out_dir: logs
+  live_every: 3              # update live view every k control ticks

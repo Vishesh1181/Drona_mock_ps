@@ -1,0 +1,4 @@
+[validator] line N=4: ACCEPTED  (min planned separation 0.389 m)
+
+[validator] circle N=4: ACCEPTED  (min planned separation 0.547 m)
+

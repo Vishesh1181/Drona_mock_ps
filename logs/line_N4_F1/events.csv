@@ -1,0 +1,31 @@
+t,drone,event,detail
+0.0,-1,ARM,"all drones armed, mission start"
+3.84,0,STALE_HOLD,vision >150 ms old
+3.84,1,STALE_HOLD,vision >150 ms old
+3.84,2,STALE_HOLD,vision >150 ms old
+3.84,3,STALE_HOLD,vision >150 ms old
+3.88,0,RECOVERED,fresh vision again
+3.88,1,RECOVERED,fresh vision again
+3.88,2,RECOVERED,fresh vision again
+3.88,3,RECOVERED,fresh vision again
+16.16,2,STALE_HOLD,vision >150 ms old
+16.32,2,LAND,"(marker LOST >300 ms, blind)"
+16.32,-1,SWARM_PAUSE,until drone 2 has landed
+16.52,2,LAND_VISION,"vision back, guided landing"
+16.6,0,STALE_HOLD,vision >150 ms old
+16.6,1,STALE_HOLD,vision >150 ms old
+16.6,3,STALE_HOLD,vision >150 ms old
+16.68,0,RECOVERED,fresh vision again
+16.68,1,RECOVERED,fresh vision again
+16.68,3,RECOVERED,fresh vision again
+20.24,2,DISARM,landed
+39.12,0,STALE_HOLD,vision >150 ms old
+39.12,1,STALE_HOLD,vision >150 ms old
+39.12,3,STALE_HOLD,vision >150 ms old
+39.16,0,RECOVERED,fresh vision again
+39.16,1,RECOVERED,fresh vision again
+39.16,3,RECOVERED,fresh vision again
+39.64,1,DISARM,mission landing complete
+39.68,0,DISARM,mission landing complete
+39.92,3,DISARM,mission landing complete
+39.92,-1,END,all drones down
